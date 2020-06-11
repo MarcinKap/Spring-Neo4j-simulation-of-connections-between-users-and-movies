@@ -21,7 +21,12 @@
                 <a
                         th:classappend="${#httpServletRequest.getRequestURI() == '/' && #request.getQueryString()== null ? 'active':''}"
                         href="/movie-form">
-                    <i>Tworzenie filmu</i>
+                    <i>Dodaj film</i>
+                </a>
+                <a
+                        th:classappend="${#httpServletRequest.getRequestURI() == '/' && #request.getQueryString()== null ? 'active':''}"
+                        href="/category-form">
+                    <i>Dodaj kategorie</i>
                 </a>
             </li>
 
