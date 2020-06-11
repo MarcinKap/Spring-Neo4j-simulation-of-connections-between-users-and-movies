@@ -28,5 +28,7 @@ public class Person {
     @Relationship(type = "FRIEND", direction = UNDIRECTED)
     private List<Person> friends = new ArrayList<>();
 
+    @Relationship(type = "VIEWED", direction = UNDIRECTED)
+    private List<Movie> movies = new ArrayList<>();
 
 }

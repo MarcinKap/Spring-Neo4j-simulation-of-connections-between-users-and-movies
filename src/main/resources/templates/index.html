@@ -27,6 +27,19 @@
             <td th:text="${user.id}"></td>
             <td th:text="${user.name}"></td>
             <td th:text="${user.surname}"></td>
+            <td>
+                <form th:action="@{/person-data}" method="get">
+
+                    <div class="col-sm-10 col-md-8 form-group">
+                        <input type="number" name="id" th:value="${user.id}" class="form-control" hidden>
+                    </div>
+                    <div class="col-sm-10 col-md-10 form-group">
+                        <button type="submit" class="btn btn-success btn-sm form-control">
+                            <i aria-hidden="true">Podgląd</i>
+                        </button>
+                    </div>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -42,6 +55,7 @@
             <th>Id</th>
             <th>Tytuł</th>
             <th>Rok produkcji</th>
+            <th>Podgląd danych</th>
         </tr>
         </thead>
         <tbody>
@@ -49,9 +63,46 @@
             <td th:text="${movie.id}"></td>
             <td th:text="${movie.title}"></td>
             <td th:text="${movie.year_of_production}"></td>
+            <td>
+                <form th:action="@{/movie-data}" method="get">
+
+                        <div class="col-sm-10 col-md-8 form-group">
+                            <input type="number" name="id" th:value="${movie.id}" class="form-control" hidden>
+                        </div>
+                        <div class="col-sm-10 col-md-10 form-group">
+                            <button type="submit" class="btn btn-success btn-sm form-control">
+                                <i aria-hidden="true">Podgląd</i>
+                            </button>
+                        </div>
+                </form>
+            </td>
+
         </tr>
         </tbody>
     </table>
+
+    <div class="msg even" style="font-size: 18px">
+        Lista Kategorii filmów
+    </div>
+
+
+    <table class="table table-bordered table-condensed">
+        <thead>
+        <tr class="active">
+            <th>Id</th>
+            <th>nazwa</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="success" data-th-each="category : ${categories}">
+            <td th:text="${category.id}"></td>
+            <td th:text="${category.name}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
 </div>
 
 

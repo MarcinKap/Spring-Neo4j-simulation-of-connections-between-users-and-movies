@@ -28,5 +28,6 @@ public class Movie {
     @Relationship(type = "MOVIE_TYPE", direction = UNDIRECTED)
     private List<Category> categories = new ArrayList<>();
 
-
+    @Relationship(type = "VIEWED", direction = UNDIRECTED)
+    private List<Person> people = new ArrayList<>();
 }

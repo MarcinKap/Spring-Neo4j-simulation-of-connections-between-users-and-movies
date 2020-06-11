@@ -26,13 +26,13 @@ public class CategoryController {
 
 
     @GetMapping("/category-form")
-    public String userForm(Model model) {
+    public String categoryForm(Model model) {
 
         return "category-form.html";
     }
 
     @PostMapping("/category-form-save")
-    public String userFormSave(Model model,
+    public String categoryFormSave(Model model,
                                @RequestParam(value = "name") String name) {
 
 

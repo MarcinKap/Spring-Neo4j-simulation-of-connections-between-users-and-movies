@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html">
+<head th:replace="document/head :: head_section"></head>
+<body>
+<div th:replace="document/content :: content_section_title"></div>
+
+<!---->
+
+
+<div style="margin-left: 15px; margin-right: 15px"  th:object="${movie}">
+
+    <div class="msg even" style="font-size: 18px">
+        Podstawowe dane
+    </div>
+    <table class="table table-bordered table-condensed">
+        <thead>
+        <tr class="active">
+            <th>Id</th>
+            <td th:text="${movie.get().id}"></td>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="active">
+            <th>Tytuł</th>
+            <td th:text="${movie.get().title}"></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr class="active">
+            <th>Rok Produkcji</th>
+            <td th:text="${movie.get().year_of_production}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="msg even" style="font-size: 18px">
+        Kategorie
+    </div>
+    <table class="table table-bordered table-condensed">
+        <thead>
+        <tr class="active" data-th-each="category : ${movieCategories}">
+            <th th:text="${category.name}"></th>
+        </tr>
+        </thead>
+
+    </table>
+    <div class="msg even" style="font-size: 18px">
+        Dodaj Kategorie
+    </div>
+
+    <table class="table table-bordered table-condensed">
+    <form th:action="@{/movie-add-category}" method="post">
+        <thead>
+        <input type="number" name="movie_id" th:value="${movie.get().id}" class="form-control" hidden>
+            <tr>
+                <select type="number" name="category_id" required class="btn btn-sm form-control" style="background-color: #f2f2f2" >
+                    <option th:each="c : ${categories}"
+                            th:value="${c.id}"
+                            th:text="${c.getName()}">
+                    </option>
+                </select>
+            </tr>
+        </thead>
+        <thead>
+            <tr>
+            <button type="submit" class="btn btn-success btn-sm form-control">
+                <i aria-hidden="true">Dodaj</i>
+            </button>
+            </tr>
+        </thead>
+    </form>
+    </table>
+
+    <div class="msg even" style="font-size: 18px">
+        Osoby które obejrzały film
+    </div>
+    <table class="table table-bordered table-condensed">
+        <thead>
+        <tr class="active">
+            <th>Id</th>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="success" data-th-each="person : ${people}">
+            <td th:text="${person.id}"></td>
+            <td th:text="${person.name}"></td>
+            <td th:text="${person.surname}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+</div>
+
+
+</body>
+<footer th:replace="document/footer :: footer_section"></footer>
+</html>

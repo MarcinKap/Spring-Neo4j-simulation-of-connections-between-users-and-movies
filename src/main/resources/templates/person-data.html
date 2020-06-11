@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html">
+<head th:replace="document/head :: head_section"></head>
+<body>
+<div th:replace="document/content :: content_section_title"></div>
+
+<!---->
+
+
+<div style="margin-left: 15px; margin-right: 15px" th:object="${person}">
+
+    <div class="msg even" style="font-size: 18px">
+        Podstawowe dane
+    </div>
+    <table class="table table-bordered table-condensed">
+        <thead>
+        <tr class="active">
+            <th>Id</th>
+            <td th:text="${person.get().id}"></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="active">
+            <th>Imię</th>
+            <td th:text="${person.get().name}"></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr class="active">
+            <th>Nazwisko</th>
+            <td th:text="${person.get().surname}"></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr class="active">
+            <th>Wiek</th>
+            <td th:text="${person.get().age}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="msg even" style="font-size: 18px">
+        Oglądnięte filmy
+    </div>
+    <table class="table table-bordered table-condensed">
+        <thead data-th-each="viewed_movie : ${viewed_movies}">
+        <tr class="active">
+            <th class="col-sm-10 col-md-10 form-group" th:text="${viewed_movie.title}"></th>
+            <th class="col-sm-2col-md-2 form-group">
+                <form th:action="@{/delete-viewed-movie}" method="post">
+                    <input type="number" name="person_id" th:value="${person.get().id}" hidden>
+                    <input type="number" name="movie_to_delete" th:value="${viewed_movie.id}" hidden>
+                    <button type="submit" class="btn btn-danger btn-sm form-control">
+                        <i aria-hidden="true">Usuń z oglądniętych</i>
+                    </button>
+                </form>
+            </th>
+        </tr>
+
+    </table>
+
+
+    </tr>
+    </thead>
+    </table>
+    <div class="msg even" style="font-size: 18px">
+        Dodaj filmy które oglądnąłeś
+    </div>
+
+    <table class="table table-bordered table-condensed">
+        <form th:action="@{/person-add-viewed-movies}" method="post">
+            <thead>
+            <input type="number" name="person_id" th:value="${person.get().id}" class="form-control" hidden>
+            <tr>
+                <select type="number" name="movie_id" required class="btn btn-sm form-control"
+                        style="background-color: #f2f2f2">
+                    <option th:each="c : ${movies}"
+                            th:value="${c.id}"
+                            th:text="${c.getTitle()}">
+                    </option>
+                </select>
+            </tr>
+            </thead>
+            <thead>
+            <tr>
+                <button type="submit" class="btn btn-success btn-sm form-control">
+                    <i aria-hidden="true">Dodaj</i>
+                </button>
+            </tr>
+            </thead>
+        </form>
+    </table>
+
+    <div class="msg even" style="font-size: 18px">
+        Filmy które mogą się Tobie spodobać
+    </div>
+    <table class="table table-bordered table-condensed">
+        <thead>
+        <tr class="active" data-th-each="suggested_movie : ${suggested_movies}">
+            <th th:text="${suggested_movie.title}"></th>
+        </tr>
+        </thead>
+    </table>
+
+
+    <div class="msg even" style="font-size: 18px">
+        Znajomi
+    </div>
+    <table class="table table-bordered table-condensed">
+        <thead>
+        <tr class="active">
+            <th>Id</th>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="success" data-th-each="friend : ${friends}">
+            <td th:text="${friend.id}"></td>
+            <td th:text="${friend.name}"></td>
+            <td th:text="${friend.surname}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="msg even" style="font-size: 18px">
+        Dodaj znajomych
+    </div>
+
+    <table class="table table-bordered table-condensed">
+        <form th:action="@{/person-add-friend-relationship}" method="post">
+            <thead>
+            <input type="number" name="person_id" th:value="${person.get().id}" class="form-control" hidden>
+            <tr>
+                <select type="number" name="new_friend_id" required class="btn btn-sm form-control"
+                        style="background-color: #f2f2f2">
+                    <option th:each="c : ${people}"
+                            th:value="${c.id}"
+                            th:text="${c.name}+' '+${c.surname}">
+                    </option>
+                </select>
+            </tr>
+            </thead>
+            <thead>
+            <tr>
+                <button type="submit" class="btn btn-success btn-sm form-control">
+                    <i aria-hidden="true">Dodaj</i>
+                </button>
+            </tr>
+            </thead>
+        </form>
+    </table>
+
+
+</div>
+
+
+</body>
+<footer th:replace="document/footer :: footer_section"></footer>
+</html>
