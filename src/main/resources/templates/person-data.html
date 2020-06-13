@@ -93,7 +93,7 @@
     </table>
 
     <div class="msg even" style="font-size: 18px">
-        Filmy które mogą się Tobie spodobać
+        Filmy które podobały się Twoim znajomym, sprawdź!
     </div>
     <table class="table table-bordered table-condensed">
         <thead>
@@ -123,6 +123,44 @@
         </tr>
         </tbody>
     </table>
+    <div class="msg even" style="font-size: 18px">
+        Te osoby możesz znać!
+    </div>
+    <table class="table table-bordered table-condensed">
+        <thead>
+        <tr class="active">
+            <th>Id</th>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="success" data-th-each="user : ${proposed_friends}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.surname}"></td>
+            <td>
+                <form th:action="@{/person-add-friend-relationship}" method="get">
+
+                    <div class="col-sm-10 col-md-8 form-group">
+                        <input type="number" name="new_friend_id" th:value="${user.id}" class="form-control" hidden>
+                        <input type="number" name="person_id" th:value="${person.get().id}" class="form-control" hidden>
+
+                    </div>
+                    <div class="col-sm-10 col-md-10 form-group">
+                        <button type="submit" class="btn btn-success btn-sm form-control">
+                            <i aria-hidden="true">Dodaj
+                            </i>
+                        </button>
+                    </div>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
     <div class="msg even" style="font-size: 18px">
         Dodaj znajomych
     </div>

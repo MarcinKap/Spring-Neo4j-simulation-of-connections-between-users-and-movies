@@ -6,7 +6,19 @@
 <div th:replace="document/content :: content_section_title"></div>
 
 <!---->
-
+<form class="form-inline" th:action="@{/import-data}" method="post" style="margin-top: 5px">
+    <div class="form-group mx-sm-3 mb-2">
+        <input type="text" class="form-control" id="path" name="path" placeholder="Podaj pełną ścieżkę pliku">
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Załaduj plik</button>
+    <a href="/delete-data" class="btn btn-danger mb-2" style="margin-left: 5px">Usuń wszystkie dane z bazy</a>
+</form>
+<div class="alert alert-danger" role="alert" th:if="${fail} == 'True'" style="margin-left: 15px; margin-right: 15px">
+    Nie udało się wczytać pliku
+</div>
+<div class="alert alert-success" role="alert" th:if="${fail} == 'False'" style="margin-left: 15px; margin-right: 15px">
+    Udało się wczytać plik
+</div>
 
 <div style="margin-left: 15px; margin-right: 15px">
     <div class="msg even" style="font-size: 18px">

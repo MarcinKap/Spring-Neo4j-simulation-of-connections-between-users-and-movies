@@ -9,8 +9,15 @@ public interface PersonToMovieRelationshipRepository extends Neo4jRepository<Per
 
     @Query("MATCH (n:Person)-[z:VIEWED]-(m:Movie) " +
             "WHERE id(m)= {movie_id} AND id(n)= {person_id}" +
-            "DELETE z  ")
+            "DELETE z")
     PersonToMovie deleteByPersonIdANDMovieId(@Param("movie_id") Long movie_id, @Param("person_id") Long person_id);
+
+    @Query("MATCH (n), (m) " +
+            "WHERE id(n)={id_n} AND id(m)={id_m} " +
+            "CREATE (n)-[:VIEWED{}]->(m)")
+    void saveViewedMovie(@Param("id_n") Long person_id, @Param("id_m") Long movie_id);
+
+
 
 
 }

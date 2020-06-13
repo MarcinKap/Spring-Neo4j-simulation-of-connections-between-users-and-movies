@@ -16,4 +16,15 @@ public interface CategoryRepository extends Neo4jRepository<Category, Long> {
             "RETURN n  ")
     List<Category> findByMovieId(@Param("movie_id") Long id);
 
+
+
+    @Query("MATCH (n:Category)" +
+            "RETURN n ORDER BY n.name ")
+    List<Category> findAllOrOrderByName();
+
+
+    @Query("CREATE (m:Category {name:{name}})")
+    void saveCategory(@Param("name") String name);
+
+
 }

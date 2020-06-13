@@ -37,20 +37,23 @@ public class MovieController {
                                @RequestParam(value = "year_of_production") Long year_of_production) {
 
 
-        Movie movie = new Movie();
-        movie.setTitle(title);
-        movie.setYear_of_production(year_of_production);
-        movieRepository.save(movie);
 
-        return "redirect:/";
+        movieRepository.saveMovie(title, year_of_production);
+
+//        Movie movie = new Movie();
+//        movie.setTitle(title);
+//        movie.setYear_of_production(year_of_production);
+//        movieRepository.save(movie);
+
+        return "redirect:/movie-form";
     }
 
     @GetMapping("/movie-data")
     public String movieData(Model model, @RequestParam(value = "id") Long id){
 
         model.addAttribute("movie", movieRepository.findById(id));
-        model.addAttribute("categories", categoryRepository.findAll());
-        System.out.println(movieRepository.findById(id).get().getCategories().size());
+        model.addAttribute("categories", categoryRepository.findAllOrOrderByName());
+
         model.addAttribute("movieCategories", categoryRepository.findByMovieId(id));
 
         model.addAttribute("people", personRepository.findByMovieId(id));
@@ -66,13 +69,15 @@ public class MovieController {
                                 @RequestParam(value = "movie_id") Long movie_id,
                                 @RequestParam(value = "category_id") Long category_id) {
 
+        moviesToCategoryRelationRepository.saveRelationship(movie_id, category_id);
 
-        MovieToCategory movieToCategory = new MovieToCategory();
-        movieToCategory.setCategory(categoryRepository.findById(category_id).orElse(null));
-        movieToCategory.setMovie(movieRepository.findById(movie_id).orElse(null));
-        moviesToCategoryRelationRepository.save(movieToCategory);
 
-        return "redirect:/";
+//        MovieToCategory movieToCategory = new MovieToCategory();
+//        movieToCategory.setCategory(categoryRepository.findById(category_id).orElse(null));
+//        movieToCategory.setMovie(movieRepository.findById(movie_id).orElse(null));
+//        moviesToCategoryRelationRepository.save(movieToCategory);
+
+        return "redirect:/movie-data?id=" +movie_id;
     }
 
 

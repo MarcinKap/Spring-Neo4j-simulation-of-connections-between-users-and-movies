@@ -36,12 +36,13 @@ public class CategoryController {
                                @RequestParam(value = "name") String name) {
 
 
-        Category category = new Category();
-        category.setName(name);
-//        movie.setYear_of_production(year_of_production);
-        categoryRepository.save(category);
+        categoryRepository.saveCategory(name);
 
-        return "redirect:/";
+//        Category category = new Category();
+//        category.setName(name);
+//        categoryRepository.save(category);
+
+        return "redirect:/category-form";
     }
 
 
