@@ -57,7 +57,7 @@ public interface PersonRepository extends Neo4jRepository<Person, Long> {
 
 
 
-    @Query("match (a) -[r] -> (), (b) delete a, r, b")
+    @Query("match (b), (a) -[r] -> () delete a, r, b")
     void deleteAllRelationshipsAndNodes();
 
 //

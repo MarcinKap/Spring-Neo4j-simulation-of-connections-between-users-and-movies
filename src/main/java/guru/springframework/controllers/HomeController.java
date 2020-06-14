@@ -24,7 +24,8 @@ public class HomeController {
 
     @GetMapping("/")
     public String homePage(Model model,
-                           @Param(value = "fail") String fail) {
+                           @Param(value = "fail") String fail,
+                           @Param(value = "fail") String fail2) {
 
         model.addAttribute("users", personRepository.findAllOrOrderByName());
         model.addAttribute("movies", movieRepository.findAllOrderByTitle());
@@ -35,6 +36,7 @@ public class HomeController {
 //        model.addAttribute("default_path", "all.json");
 
         model.addAttribute("fail", fail);
+        model.addAttribute("fail2", fail2);
 
         return "index";
     }
@@ -55,10 +57,26 @@ public class HomeController {
             else
                 return "redirect:/?fail=True";
         }
-
-
         return "redirect:/";
     }
+
+
+    @PostMapping("/import-movies")
+    public String importMoviesFromJSON(Model model,
+                             @RequestParam(value = "path") String path) {
+
+//        try {
+            movieRepository.importMoviesFromJSONFile(path);
+//        }
+//        catch(Exception e) {
+//                return "redirect:/?fail2=True";
+//        }
+        return "redirect:/";
+    }
+
+
+
+
 
     @GetMapping("/delete-data")
     public String deleteData(Model model) {

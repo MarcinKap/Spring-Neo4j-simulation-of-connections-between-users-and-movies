@@ -23,7 +23,7 @@ public class Movie {
     private Long id;
 
     private String title;
-    private Long year_of_production;
+    private Integer year_of_production;
 
     @Relationship(type = "MOVIE_TYPE", direction = UNDIRECTED)
     private List<Category> categories = new ArrayList<>();

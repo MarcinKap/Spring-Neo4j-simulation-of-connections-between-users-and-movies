@@ -14,25 +14,48 @@ public interface MovieRepository extends Neo4jRepository<Movie, Long> {
     @Query("MATCH (n:Movie)-[:VIEWED]-(m:Person) " +
             "WHERE id(m)= {person_id}" +
             "RETURN n  ")
-    List<Movie> findByPersonId(@Param("person_id") Long id);
+    List<Movie> findViewedMoviesByPersonId(@Param("person_id") Long id);
+
+    @Query("MATCH (n:Movie)-[:INTERESTED]-(m:Person) " +
+            "WHERE id(m)= {person_id}" +
+            "RETURN n  ")
+    List<Movie> findnteresingMoviesByPersonId(@Param("person_id") Long id);
+
+
+
 
     @Query("MATCH (n:Movie)" +
             "RETURN n ORDER BY n.title ")
     List<Movie> findAllOrderByTitle();
 
 
-//    @Query("MATCH " +
-//            "(n2:Movie)-[:VIEWED]-(p2:Person)," +
-//            "(n1:Movie)-[:VIEWED]-(p1:Person)," +
-//            "(p1:Person)-[:FRIEND]-(p2:Person)," +
-//            "(c2:Category)-[:MOVIE_TYPE]-(n2:Movie)," +
-//            "(c1:Category)-[:MOVIE_TYPE]-(n1:Movie)"+
+    @Query("CALL apoc.load.json({path}) " +
+            " YIELD value " +
+            "CREATE (:Movie {title:value.title,year_of_production:apoc.convert.toInteger(value.year_of_production)})")
+    void importMoviesFromJSONFile(@Param("path") String path);
 
-    @Query("MATCH " +
-            "(c2:Category)-[:MOVIE_TYPE]-(n2:Movie)-[:VIEWED]-(p2:Person)-[:FRIEND]-(p1:Person)-[:VIEWED]-(n1:Movie)-[:MOVIE_TYPE]-(c2:Category)" +
-            "WHERE NOT (p1)-[:VIEWED]-(n2) AND  id(p1)= {person_id} " +
-            "WITH n2 as movie, count(*) as number " +
-            "RETURN movie ORDER BY number DESC ")
+
+
+//Najpopularniejsze obejrzane filmy
+
+//    @Query("MATCH " +
+//            "(c2:Category)-[:MOVIE_TYPE]-(n2:Movie)-[:VIEWED]-(p2:Person)-[:FRIEND]-(p1:Person)-[:VIEWED]-(n1:Movie)-[:MOVIE_TYPE]-(c2:Category)" +
+//            "WHERE NOT (p1)-[:VIEWED]-(n2) AND  id(p1)= {person_id} " +
+//            "WITH n2 as movie, count(*) as number " +
+//            "RETURN movie ORDER BY number DESC ")
+//    List<Movie> findSuggestedMovies(@Param("person_id") Long id);
+
+
+
+    @Query("MATCH (c2:Category)-[:MOVIE_TYPE]-(n2:Movie)-[x:VIEWED]-(p2:Person)-[:FRIEND]-(p1:Person)-[:VIEWED]-(n1:Movie)-[:MOVIE_TYPE]-(c2:Category)" +
+    " WHERE NOT (p1)-[:VIEWED]-(n2) AND  id(p1)= {person_id}" +
+   " WITH n2 as movie, count(*)*x.weight  as number1"+
+  "  RETURN movie"+
+    " UNION"+
+    " MATCH (c2:Category)-[:MOVIE_TYPE]-(n3:Movie)-[z:INTERESTED]-(p2:Person)-[:FRIEND]-(p1:Person)-[:VIEWED]-(n1:Movie)-[:MOVIE_TYPE]-(c2:Category)"+
+    " WHERE NOT (p1)-[:INTERESTED]-(n3) AND  id(p1)= {person_id}"+
+    " WITH n3 as movie, count(*)*z.weight as number2"+
+    " RETURN movie")
     List<Movie> findSuggestedMovies(@Param("person_id") Long id);
 
 

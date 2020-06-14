@@ -57,7 +57,11 @@ public class PersonController {
 //        Dane przeglądanej osoby
         model.addAttribute("person", personRepository.findById(id));
 //      Oglądnięte filmy
-        model.addAttribute("viewed_movies", movieRepository.findByPersonId(id));
+        model.addAttribute("viewed_movies", movieRepository.findViewedMoviesByPersonId(id));
+//        Filmy które Cię zainteresowały
+        model.addAttribute("insteresing_movies", movieRepository.findnteresingMoviesByPersonId(id));
+
+
 //        Wszystkie filmy
         model.addAttribute("movies", movieRepository.findAll());
 
@@ -95,6 +99,20 @@ public class PersonController {
         return "redirect:person-data?id=" + id;
     }
 
+    @PostMapping("/person-add-interesting-movies")
+    public String PersonAddInteresingMovies(Model model,
+                                        @RequestParam(value = "person_id") Long id,
+                                        @RequestParam(value = "movie_id") Long movie_id) {
+
+        personToMovieRelationshipRepository.saveInterestedMovie(id, movie_id);
+
+
+        return "redirect:person-data?id=" + id;
+    }
+
+
+
+
 
     @PostMapping("/person-add-friend-relationship")
     public String personAddFriendRealtionship(Model model,
@@ -125,6 +143,15 @@ public class PersonController {
 
         return "redirect:person-data?id=" + id;
     }
+    @PostMapping("/delete-interesing-movie")
+    public String deleteInteresingMovie(Model model,
+                                    @RequestParam(value = "person_id") Long id,
+                                    @RequestParam(value = "movie_to_delete") Long movie_to_delete) {
 
+
+        personToMovieRelationshipRepository.deleteInteresingMovieByPersonIdANDMovieId(movie_to_delete, id);
+
+        return "redirect:person-data?id=" + id;
+    }
 
 }
