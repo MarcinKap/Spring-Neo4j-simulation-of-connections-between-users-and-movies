@@ -43,7 +43,7 @@ public interface PersonRepository extends Neo4jRepository<Person, Long> {
 
 
     @Query ("MATCH (n:Person)-[:FRIEND]-(m:Person)-[:FRIEND]-(p) "+
-            "WHERE NOT id(n)= {person_id} AND NOT (n:Person)-[:FRIEND]-(p:Person)" +
+            "WHERE NOT id(n)= {person_id} AND id(p)={person_id} AND NOT (n:Person)-[:FRIEND]-(p:Person)" +
             "WITH n as newFriend, COUNT(*) as number " +
             "RETURN newFriend ORDER BY number DESC LIMIT 4  ")
     List<Person> findProposedPeopleForFriendship(@Param("person_id") Long id);
