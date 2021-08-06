@@ -16,7 +16,6 @@ public class SavingService {
 
     public void saveRelationshipPersonToPerson(Long id_1, Long id_2){
         personToPersonRealtionRepository.saveFriendship(id_1, id_2);
-//        personToPersonRealtionRepository.saveFriendship(id_2, id_1);
     }
 
     public void LoadDataFromJSONFile(String path){

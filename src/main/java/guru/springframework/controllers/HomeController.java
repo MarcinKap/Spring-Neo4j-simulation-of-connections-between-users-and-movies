@@ -29,12 +29,7 @@ public class HomeController {
 
         model.addAttribute("users", personRepository.findAllOrOrderByName());
         model.addAttribute("movies", movieRepository.findAllOrderByTitle());
-
         model.addAttribute("categories", categoryRepository.findAllOrOrderByName());
-
-
-//        model.addAttribute("default_path", "all.json");
-
         model.addAttribute("fail", fail);
         model.addAttribute("fail2", fail2);
 
@@ -45,13 +40,10 @@ public class HomeController {
     public String importData(Model model,
                                    @RequestParam(value = "path") String path) {
 
-
-//
         try {
             savingService.LoadDataFromJSONFile(path);
         }
         catch(Exception e) {
-            System.out.println(e.getMessage());
             if(e.getMessage() == "Scalar response queries must only return one column. Make sure your cypher query only returns one item.")
             return "redirect:/?fail=False";
             else
@@ -65,18 +57,14 @@ public class HomeController {
     public String importMoviesFromJSON(Model model,
                              @RequestParam(value = "path") String path) {
 
-//        try {
+        try {
             movieRepository.importMoviesFromJSONFile(path);
-//        }
-//        catch(Exception e) {
-//                return "redirect:/?fail2=True";
-//        }
+        }
+        catch(Exception e) {
+                return "redirect:/?fail2=True";
+        }
         return "redirect:/";
     }
-
-
-
-
 
     @GetMapping("/delete-data")
     public String deleteData(Model model) {

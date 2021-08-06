@@ -18,30 +18,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CategoryController {
 
     PersonRepository personRepository;
-
     MovieRepository movieRepository;
-
     CategoryRepository categoryRepository;
-
-
 
     @GetMapping("/category-form")
     public String categoryForm(Model model) {
-
         return "category-form.html";
     }
 
     @PostMapping("/category-form-save")
     public String categoryFormSave(Model model,
                                @RequestParam(value = "name") String name) {
-
-
         categoryRepository.saveCategory(name);
-
-//        Category category = new Category();
-//        category.setName(name);
-//        categoryRepository.save(category);
-
         return "redirect:/category-form";
     }
 

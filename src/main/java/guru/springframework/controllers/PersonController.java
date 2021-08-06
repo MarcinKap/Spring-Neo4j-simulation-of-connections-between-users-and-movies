@@ -37,17 +37,7 @@ public class PersonController {
                                @RequestParam(value = "name") String name,
                                @RequestParam(value = "surname") String surname,
                                @RequestParam(value = "age") Long age) {
-
-
         personRepository.savePerson(name, surname, age);
-
-//        Person person = new Person();
-//        person.setName(name);
-//        person.setSurname(surname);
-//        person.setAge(age);
-//        personRepository.save(person);
-
-
         return "redirect:/";
     }
 
@@ -60,7 +50,6 @@ public class PersonController {
         model.addAttribute("viewed_movies", movieRepository.findViewedMoviesByPersonId(id));
 //        Filmy które Cię zainteresowały
         model.addAttribute("insteresing_movies", movieRepository.findnteresingMoviesByPersonId(id));
-
 
 //        Wszystkie filmy
         model.addAttribute("movies", movieRepository.findAll());
@@ -78,7 +67,6 @@ public class PersonController {
         //      Użytkownicy których możesz dodać
         model.addAttribute("people", personRepository.findByPeopleForFriendship(id));
 
-
         return "person-data";
     }
 
@@ -87,15 +75,7 @@ public class PersonController {
     public String PersonAddViewedMovies(Model model,
                                         @RequestParam(value = "person_id") Long id,
                                         @RequestParam(value = "movie_id") Long movie_id) {
-
         personToMovieRelationshipRepository.saveViewedMovie(id, movie_id);
-
-
-//        PersonToMovie personToMovie = new PersonToMovie();
-//        personToMovie.setMovie(movieRepository.findById(movie_id).orElse(null));
-//        personToMovie.setPerson(personRepository.findById(id).orElse(null));
-//        personToMovieRelationshipRepository.save(personToMovie);
-
         return "redirect:person-data?id=" + id;
     }
 
@@ -103,10 +83,7 @@ public class PersonController {
     public String PersonAddInteresingMovies(Model model,
                                         @RequestParam(value = "person_id") Long id,
                                         @RequestParam(value = "movie_id") Long movie_id) {
-
         personToMovieRelationshipRepository.saveInterestedMovie(id, movie_id);
-
-
         return "redirect:person-data?id=" + id;
     }
 
@@ -118,16 +95,7 @@ public class PersonController {
     public String personAddFriendRealtionship(Model model,
                                               @RequestParam(value = "person_id") Long id,
                                               @RequestParam(value = "new_friend_id") Long new_friend_id) {
-
-
         savingService.saveRelationshipPersonToPerson(id, new_friend_id);
-
-
-//        PersonToPerson personToPerson = new PersonToPerson();
-//        personToPerson.setPerson(personRepository.findById(id).orElse(null));
-//        personToPerson.setPerson_2(personRepository.findById(new_friend_id).orElse(null));
-//        personToPersonRealtionRepository.save(personToPerson);
-
 
         return "redirect:person-data?id=" + id;
     }
@@ -138,7 +106,6 @@ public class PersonController {
                                     @RequestParam(value = "person_id") Long id,
                                     @RequestParam(value = "movie_to_delete") Long movie_to_delete) {
 
-
         personToMovieRelationshipRepository.deleteByPersonIdANDMovieId(movie_to_delete, id);
 
         return "redirect:person-data?id=" + id;
@@ -147,10 +114,7 @@ public class PersonController {
     public String deleteInteresingMovie(Model model,
                                     @RequestParam(value = "person_id") Long id,
                                     @RequestParam(value = "movie_to_delete") Long movie_to_delete) {
-
-
         personToMovieRelationshipRepository.deleteInteresingMovieByPersonIdANDMovieId(movie_to_delete, id);
-
         return "redirect:person-data?id=" + id;
     }
 
