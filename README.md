@@ -1,7 +1,7 @@
 English:
 
-The purpose of the project was to create a system supporting the offering of films to users. 
-The implemented functions include:
+The purpose of the project was to create a system supporting the offering of films to users.   
+The implemented functions include:  
     1.Possibility to create users, videos and categories.  
     2.Each movie has the option of creating a relationship with a category (relationship: MOVIE_TYPE).  
     3.Each user can create a relationship with the movie (relationship: VIEWED), it is possible to delete this relationship.  
@@ -14,8 +14,8 @@ I used Java and the Spring framework to write the code. Database operations are 
 
 Polski:
 
-Celem projektu było utworzenie systemu wspomagającego proponowanie filmów użytkownikom. 
-Jednymi z zaimplementowanych funkcji są:
+Celem projektu było utworzenie systemu wspomagającego proponowanie filmów użytkownikom.   
+Jednymi z zaimplementowanych funkcji są:  
     1. Możliwość stworzenia użytkowników, filmów oraz kategorii.  
     2. Każdy film ma możliwośd stworzenia relacji z kategorią (relacja: MOVIE_TYPE).  
     3. Każdy użytkownik ma możliwośd stworzenia relacji z filmem (relacja: VIEWED), jest możliwośd usunięcia tej relacji.  
